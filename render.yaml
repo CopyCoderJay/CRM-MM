@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: twenty-app
+    env: docker
+    dockerfilePath: ./packages/twenty-docker/Dockerfile
+    plan: starter
+    envVars:
+      - key: PORT
+        value: 3000
+      - key: NODE_ENV
+        value: production
+      - key: PG_DATABASE_URL
+        fromDatabase:
+          name: twenty-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: twenty-redis
+          property: connectionString
+      - key: APP_SECRET
+        generateValue: true
+      - key: JWT_SECRET
+        generateValue: true
+
+databases:
+  - name: twenty-db
+    plan: starter
+    databaseName: twenty
+    user: twenty
+
+  - type: redis
+    name: twenty-redis
+    plan: starter
+    ipAllowList: []
