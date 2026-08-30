@@ -23,13 +23,13 @@ services:
       - key: JWT_SECRET
         generateValue: true
 
+  - type: redis
+    name: twenty-redis
+    plan: starter
+    ipAllowList: []
+
 databases:
   - name: twenty-db
     plan: starter
     databaseName: twenty
     user: twenty
-
-  - type: redis
-    name: twenty-redis
-    plan: starter
-    ipAllowList: []
